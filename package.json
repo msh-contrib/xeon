@@ -1,0 +1,19 @@
+{
+  "name": "dep-lookup",
+  "version": "1.0.0",
+  "description": "dependency lookup tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drKraken/da.git"
+  },
+  "author": "Oleh Kuchuk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drKraken/da/issues"
+  },
+  "homepage": "https://github.com/drKraken/da#readme"
+}
