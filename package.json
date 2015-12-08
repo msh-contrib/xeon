@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/drKraken/da/issues"
   },
-  "homepage": "https://github.com/drKraken/da#readme"
+  "homepage": "https://github.com/drKraken/da#readme",
+  "dependencies": {
+    "debug": "^2.2.0"
+  },
+  "devDependencies": {
+    "colors": "^1.1.2"
+  }
 }
