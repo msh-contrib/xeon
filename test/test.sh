@@ -1,5 +1,5 @@
-require("../test/data.shell")
-require("../test/test.shell")
+require("./test/data.shell")
+require("./test/test.shell")
 
 function test {
 	# pass
