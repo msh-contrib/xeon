@@ -23,9 +23,15 @@
     "chokidar": "^1.4.1",
     "commander": "^2.9.0",
     "debug": "^2.2.0",
+    "gh-got": "^2.4.0",
+    "got": "^5.2.1",
+    "is-github-url": "^1.2.0",
     "meow": "^3.6.0",
     "mkdirp": "^0.5.1",
-    "shebang-regex": "^2.0.0"
+    "shebang-regex": "^2.0.0",
+    "sync-request": "^2.1.0",
+    "trim": "0.0.1",
+    "url-regex": "^3.1.0"
   },
   "devDependencies": {
     "colors": "^1.1.2"
