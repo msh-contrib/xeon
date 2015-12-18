@@ -1,6 +1,6 @@
 {
   "name": "bash-require",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "module loader for bash scripts",
   "bin": {
     "br": "lib/cli.js"
