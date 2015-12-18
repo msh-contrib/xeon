@@ -4,16 +4,23 @@
 #bash-require
 > #### module loader for bash scripts with node `require("module")` style
 
+## about
+`bash-require` tiny node.js based tool 
+
+that simplify creation of modular and reusable bash scripts, 
+
+large or small, for personal usage or sysadmin tasks 
+
 ## install
-Install node first then with npm do
+install node first then with npm do
 
 > npm i -g bash-require
 
 **note** *it may require sudo mode to install global node package*
 
-Check availability with `br --help`
+check availability with `br --help`
 
-If you see help message you are good to go
+if you see help message you are good to go
 
 ## example
 create module
@@ -71,13 +78,13 @@ then type at cmd `br --input ./app.sh --output ./build/build.sh`
 
 it will read your requires, build dependency graph, resolve it and generate `./build/build.sh` file,
 
-that you can run with `bash`.
+that you can run with `bash`
 
-Also, there is a watching option
+also, there is a watching option
 
-just add `--watch` flag to previous cmd and it will watch for changes in required files and build bundle on a fly.
+just add `--watch` flag to previous cmd and it will watch for changes in required files and build bundle on a fly
 
-If your'd like to require external source, just type
+if you'd like to require external source, just type
 
 ```sh
 require('http://domain.com/folder/my_script.sh')
