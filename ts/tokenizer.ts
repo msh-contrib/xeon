@@ -1,58 +1,163 @@
+const SyntaxTokens = {
+  lbracket: '{',
+  rbracket: '}',
+  lparen: '(',
+  rparen: ')',
+  whitespace: /\s/,
+  num: /[0-9]/,
+  name: /[a-z]/i,
+  operator: /[+*-/]/,
+  assign: '=',
+  comma: ',',
+  semicolumn: ';'
+};
+
 export class TokenGenerator {
-  source: string;
-  tokens: string[];
+  source;
+  _tokens;
   constructor(source) {
     this.source = source;
-    this.tokens = this.source.split(/\s/); //array of current tokens;
+    this._tokens = [];
+    return this;
+  }
+  generate() {
+    let _current = 0;
+    while(_current < this.source.length) {
+      let char = this.source[_current];
+      if (char === SyntaxTokens.lbracket) {
+        this._tokens.push({
+          type: 'lbracket',
+          value: char
+        });
+        _current++;
+        continue;
+      }
+      if (char === SyntaxTokens.rbracket) {
+        this._tokens.push({
+          type: 'rbracket',
+          value: char
+        });
+        _current++;
+        continue;
+      }
+      if (char === SyntaxTokens.lparen) {
+        this._tokens.push({
+          type: 'lparen',
+          value: char
+        });
+        _current++;
+        continue;
+      }
+      if (char === SyntaxTokens.rparen) {
+        this._tokens.push({
+          type: 'rparen',
+          value: char
+        });
+        _current++;
+        continue;
+      }
+      if (SyntaxTokens.whitespace.test(char)) {
+        _current++;
+        continue;
+      }
+      if (SyntaxTokens.num.test(char)) {
+        let _value = '';
+        while(SyntaxTokens.num.test(char)) {
+          _value += char;
+          char = this.source[++_current];
+        }
+        this._tokens.push({
+          type: 'num',
+          value: _value
+        });
+        continue;
+      }
+      if (SyntaxTokens.name.test(char)) {
+        let _value = '';
+        while(SyntaxTokens.name.test(char)) {
+          _value += char;
+          char = this.source[++_current];
+        }
+        this._tokens.push({
+          type: 'name',
+          value: _value
+        });
+        continue;
+      }
+      if (char === SyntaxTokens.assign){
+        this._tokens.push({
+          type: 'equals',
+          value: char
+        });
+        _current++;
+        continue;
+      }
+      if (char === SyntaxTokens.comma){
+        this._tokens.push({
+          type: 'comma',
+          value: char
+        });
+        _current++;
+        continue;
+      }
+      if (char === SyntaxTokens.semicolumn){
+        this._tokens.push({
+          type: 'semicolumn',
+          value: char
+        });
+        _current++;
+        continue;
+      }
+      if (SyntaxTokens.operator.test(char)) {
+        this._tokens.push({
+          type: 'operator',
+          value: char
+        });
+        _current++;
+        continue;
+      }
+      throw new Error('generate(): unknown symbol:' + JSON.stringify(char));
+    }
     return this;
   }
   get() {
-    if (!this.tokens.length) return;
-    return this.tokens;
+    if (!this._tokens.length) return;
+    return this._tokens;
   }
 }
 
 export class Parser {
   tokens;
-  _modified;
+  _ast;
   constructor(tokens) {
     this.tokens = tokens;
-    this._modified = [];
+    this._ast = {type: 'Program', body: []};
     return this;
   }
   parse(): Parser {
-    let _current = 0;
-    function getFunctionContent() {
-      let content = [];
-      while(this.tokens[_current] !== '}') {
-        content.push(this.tokens[_current++]);
+    let current = 0;
+    function walk() {
+      let token = this.tokens[current];
+      if (token.type === 'num') {
+        current++;
+        return {
+          type: 'NumberLiteral',
+          value: token.value
+        };
       }
-      _current++;
-      return content.join(' ');
+      current++;
+      return {
+        type: 'Statement',
+        value: token.value
+      };
     }
-    while (_current < this.tokens.length) {
-      let token = this.tokens[_current];
-      if (token === 'test()' && this.tokens[++_current] === '{') {
-        ++_current;
-        let context = getFunctionContent.call(this);
-        this._modified.push({
-          type: 'FunctionDeclaration',
-          name: token,
-          context: context
-        });
-        continue;
-      }
-      this._modified.push({
-        type: 'BaseSourceContent',
-        value: token
-      });
-      _current++;
-      continue;
+    while(current < this.tokens.length) {
+      this._ast.body.push(walk.call(this));
     }
     return this;
   }
   get() {
-    return this._modified;
+    return this._ast;
   }
 }
 
@@ -105,3 +210,7 @@ export class Generator{
     return this.sourceStr.join(' ');
   }
 }
+
+let tokens = new TokenGenerator('test = 2; function test() { echo test; }').generate().get();
+let ast = new Parser(tokens).parse().get();
+console.log(ast);
