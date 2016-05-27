@@ -21,6 +21,8 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "chokidar": "^1.4.1",
+    "debug": "^2.2.0",
+    "inherits": "^2.0.1",
     "meow": "^3.6.0",
     "mkdirp": "^0.5.1",
     "shebang-regex": "^2.0.0",
