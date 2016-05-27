@@ -84,6 +84,18 @@ that you can run with `bash` cmd
 there is an file watching option as well, just add `--watch` flag to previous command
 
 Okay moving next...
+<<<<<<< Updated upstream
+
+Imagine that we create some useful badass script, and want to share it with someone or just save for future usage.
+
+In typical workflow u just create snippet or put it somewhere on remote machine .eg and then seaching it for  hours or days, when u really need it.
+
+With xeon you can use your shell script as npm modules as u used to (if you have node.js background).
+
+So i have script that i upload to npm with own dependencies as well
+
+in your app folder just install an npm module
+=======
 
 Imagine that we create some useful badass script, and want to share it with someone or just save for future usage.
 
@@ -109,6 +121,41 @@ Then use it in our entry `app.sh`
 
  log_bye "Oleh"
 ```
+
+Xeon undertand that u want to load file from node modules and will generate proper bundle file.
+
+Next imagine you find some great script on internet, that do what u actually need and want to use it with your script
+>>>>>>> Stashed changes
+
+just add `require("http://some.external.domain/awesome_script.sh")`;
+
+`app.sh`
+```sh
+<<<<<<< Updated upstream
+  $ npm i --save my_module_name
+```
+
+Then use it in our entry `app.sh`
+
+`app.sh`
+```sh
+ require("my_module_name")
+ require("./bye.sh")
+ require("./module_that_use_others.sh")
+
+ log_bye "Oleh"
+```
+=======
+ require("http://some.external.domain/awesome_script.sh")
+ require("my_module_name")
+ require("./bye.sh")
+ require("./module_that_use_others.sh")
+
+ log_bye "Oleh"
+```
+
+
+>>>>>>> Stashed changes
 
 Xeon undertand that u want to load file from node modules and will generate proper bundle file.
 
