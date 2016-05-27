@@ -1,26 +1,30 @@
-#bash-require
+# xeon
 > #### module loader for bash scripts with node `require("module")` style
 
 ## about
-`bash-require` tiny node.js based tool 
+`xeon` tiny node.js based tool 
 
-that simplify creation of modular and reusable bash scripts, 
+that simplify the process of creation modular and reusable bash scripts, 
 
 large or small, for personal usage or sysadmin tasks 
 
 ## install
 install node first then with npm do
 
-> npm i -g bash-require
+> npm i -g xeon
 
 **note** *it may require sudo mode to install global node package*
 
-check availability with `br --help`
+check availability with `xeon --help`
 
-if you see help message you are good to go
+if you see help message you are ready to go
 
 ## example
-create module
+Lets simply create one module that we'd like to use in future
+
+For example here is one that have function in it that print your name to console
+
+Pretty simple
 
 `hello.sh`
 ```sh
@@ -30,7 +34,7 @@ log_hello() {
 }
 ```
 
-and one more module
+and lets add one more module that say bye to u
 
 `bye.sh`
 ```sh
@@ -40,7 +44,7 @@ log_bye() {
 }
 ```
 
-and more, and more
+some fancy module as well
 
 `unicorn_power.sh`
 ```sh
@@ -49,7 +53,7 @@ unicorn() {
 }
 ```
 
-then use some of your modules from other modules as you used for
+and also some module that use other modules as well
 
 `module_that_use_others.sh`
 ```sh
@@ -61,7 +65,7 @@ unicorn # will echo meow
 log_bye "Oleh" # will echo Bye, Oleh
 ```
 
-then create entry, for example, `app.sh` and require some modules
+then create entry, for example, `app.sh` and require some modules too
 
 `app.sh`
 ```sh
@@ -71,27 +75,63 @@ then create entry, for example, `app.sh` and require some modules
  log_bye "Oleh"
 ```
 
-then type at cmd `br --input ./app.sh --output ./build/build.sh`
+then type at cmd `xeon --input ./app.sh --output ./build/build.sh`
 
 it will read your requires, build dependency graph, resolve it and generate `./build/build.sh` file,
 
-that you can run with `bash`
+that you can run with `bash` cmd
 
-also, there is a watching option
+there is an file watching option as well, just add `--watch` flag to previous command
 
-just add `--watch` flag to previous cmd and it will watch for changes in required files and build bundle on a fly
+Okay moving next...
 
-if you'd like to require external source, just type
+Imagine that we create some useful badass script, and want to share it with someone or just save for future usage.
+
+In typical workflow u just create snippet or put it somewhere on remote machine .eg and then seaching it for  hours or days, when u really need it.
+
+With xeon you can use your shell script as npm modules as u used to (if you have node.js background).
+
+So i have script that i upload to npm with own dependencies as well
+
+in your app folder just install an npm module
 
 ```sh
-require('http://domain.com/folder/my_script.sh')
+  $ npm i --save my_module_name
 ```
 
-## license
+Then use it in our entry `app.sh`
+
+`app.sh`
+```sh
+ require("my_module_name")
+ require("./bye.sh")
+ require("./module_that_use_others.sh")
+
+ log_bye "Oleh"
+```
+
+Xeon undertand that u want to load file from node modules and will generate proper bundle file.
+
+Next imagine you find some great script on internet, that do what u actually need and want to use it with your script
+
+just add `require("http://some.external.domain/awesome_script.sh")`;
+
+`app.sh`
+```sh
+ require("http://some.external.domain/awesome_script.sh")
+ require("my_module_name")
+ require("./bye.sh")
+ require("./module_that_use_others.sh")
+
+ log_bye "Oleh"
+```
+
+Thats all, xeon will download and include that file as well
+
+`Note!` for security reasons downloading external files not allowed by default 
+
+You should use flag --alow-external with previous command. Just be sure that u load good stuffs.
+
+# license
 
 MIT
-
-
-
-
-
