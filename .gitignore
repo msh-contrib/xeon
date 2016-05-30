@@ -1,2 +1,5 @@
 node_modules/
-scripts/
+.scripts/
+npm-debug.log.*
+npm-debug.log
+.DS_Store
