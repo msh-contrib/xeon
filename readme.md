@@ -132,3 +132,19 @@ Thats all, xeon will download and include that file as well
 
 You should use flag --alow-external with previous command. Just be sure that u load good stuffs.
 
+
+## plans for future
+
+Right now, xeon just analyze your dependencies and merge files in correct order. 
+
+It's a pretty straightforward way of doing bundling.
+
+However, I am currently working on AST generator/stringifier for bash scripts,
+
+that will allow xeon to build things faster, analyze code you are going to bundle and also transform scripts in a way
+
+you want it to be (.eg fish shell scripts could be transformed to bash scripts while build process)
+
+## license
+
+MIT
