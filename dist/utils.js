@@ -15,7 +15,7 @@ exports.beginsWith = beginsWith;
 
 var _os = require('os');
 
-var _shebangRegex = require('shebangRegex');
+var _shebangRegex = require('shebang-regex');
 
 var shebangRegex = _interopRequireWildcard(_shebangRegex);
 
@@ -39,7 +39,7 @@ function toCorrectString(obj) {
 };
 
 function isObject(value) {
-  return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && this.toCorrectString(value) === '[object Object]';
+  return (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && toCorrectString(value) === '[object Object]';
 };
 
 function hasProperty(obj, prop) {

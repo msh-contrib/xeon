@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _events = require('./events');
+var _events = require('events');
 
 var _chokidar = require('chokidar');
 
@@ -16,21 +16,21 @@ var _resolver = require('./resolver');
 
 var _resolver2 = _interopRequireDefault(_resolver);
 
-var _buildDesGraph2 = require('./buildDesGraph');
+var _depsGraph = require('./deps-graph');
 
-var _buildDesGraph3 = _interopRequireDefault(_buildDesGraph2);
+var _depsGraph2 = _interopRequireDefault(_depsGraph);
 
 var _file = require('./file');
-
-var _file2 = _interopRequireDefault(_file);
 
 var _path = require('path');
 
 var _outputFileSync = require('output-file-sync');
 
-var outputFileSync = _interopRequireWildcard(_outputFileSync);
+var _outputFileSync2 = _interopRequireDefault(_outputFileSync);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var _prettyjson = require('prettyjson');
+
+var _prettyjson2 = _interopRequireDefault(_prettyjson);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52,7 +52,6 @@ var Xeon = function (_EventEmitter) {
 
     _this.entry = _this._resolvePath(entry);
     _this.output = _this._resolvePath(output);
-    _this.emit('init');
     return _this;
   }
 
@@ -69,10 +68,10 @@ var Xeon = function (_EventEmitter) {
     value: function buildDesGraph() {
       try {
         this.emit('building_graph');
-        this.graph = (0, _buildDesGraph3.default)(this.entry);
+        this.graph = (0, _depsGraph2.default)(this.entry);
         return this;
       } catch (error) {
-        console.log('Error while building dependecies graph ' + JSON.stringify(error));
+        console.log('Error while building graph\n ' + _prettyjson2.default.render(error));
       }
     }
 
@@ -83,10 +82,10 @@ var Xeon = function (_EventEmitter) {
     value: function resolveDepsGraph() {
       try {
         this.emit('resolving_deps');
-        this.resolvedDeps = (0, _resolver2.default)(this.graph.getNode(this.entry));
+        this.resolvedGraph = (0, _resolver2.default)(this.graph.getNode(this.entry));
         return this;
       } catch (error) {
-        console.log('Error while resolving dependecies ' + JSON.stringify(error));
+        console.log('Error while resolving graph\n ' + _prettyjson2.default.render(error));
       }
     }
 
@@ -96,12 +95,12 @@ var Xeon = function (_EventEmitter) {
     key: 'writeBundle',
     value: function writeBundle() {
       try {
-        var dataList = _file2.default.getData(this.resolvedGraph);
-        outputFileSync(this.output, _file2.default.mergeData(dataList), 'utf-8');
-        this.emit('bundling');
+        var dataList = (0, _file.getData)(this.resolvedGraph);
+        (0, _outputFileSync2.default)(this.output, (0, _file.mergeData)(dataList), 'utf-8');
+        this.emit('bundle');
         return this;
       } catch (error) {
-        console.log('Error while writing bundle: ' + JSON.stringify(error));
+        console.log('Error while writing graph\n ' + _prettyjson2.default.render(error));
       }
     }
 
@@ -112,7 +111,7 @@ var Xeon = function (_EventEmitter) {
     value: function watchDeps(callback) {
       var _this2 = this;
 
-      var watcher = _chokidar2.default.watch(_file2.default.getPathes(this.resolvedGraph), { ignoreInitial: true });
+      var watcher = _chokidar2.default.watch((0, _file.getPathes)(this.resolvedGraph), { ignoreInitial: true });
       watcher.on('ready', function () {
         _this2.emit('start_watch');
       });

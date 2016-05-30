@@ -18,7 +18,7 @@ var urlRegex = _interopRequireWildcard(_urlRegex);
 
 var _trim = require('trim');
 
-var trim = _interopRequireWildcard(_trim);
+var _trim2 = _interopRequireDefault(_trim);
 
 var _graph = require('./graph');
 
@@ -26,11 +26,9 @@ var _graph2 = _interopRequireDefault(_graph);
 
 var _utils = require('./utils');
 
-var _utils2 = _interopRequireDefault(_utils);
-
 var _file = require('./file');
 
-var _file2 = _interopRequireDefault(_file);
+var file = _interopRequireWildcard(_file);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38,14 +36,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 // check if string is relative path
 function relativePath(file) {
-  return _utils2.default.beginsWith(file, './') || _utils2.default.beginsWith(file, '../');
+  return (0, _utils.beginsWith)(file, './') || (0, _utils.beginsWith)(file, '../');
 }
 
 // read deps file and get data
 function readDepsFile(moduleLoc) {
   var pkg = path.join(moduleLoc, 'package.json');
   if (!fs.statSync(pkg).isFile()) throw new Error('can not find package.json file');
-  return JSON.parse(fileUtils.readFile(pkg));
+  return JSON.parse(file.readFile(pkg));
 }
 
 // get main file from package json
@@ -83,23 +81,23 @@ function resolveFilePath(file, parent) {
   return path.resolve(modulePath, mainFile);
 }
 
-exports.default = function (file) {
+exports.default = function (filePath) {
   var graph = new _graph2.default();
 
-  (function walk(file, parent) {
+  (function walk(filePath, parent) {
     // if graph already have such node skip
-    if (graph.getNode(file)) return;
+    if (graph.getNode(filePath)) return;
 
-    var normalizedPath = resolveFilePath(file, parent);
-    var data = fileUtils.readFile(normalizedPath);
+    var normalizedPath = resolveFilePath(filePath, parent);
+    var data = file.readFile(normalizedPath);
 
     // add node if nece
     graph.addNode(normalizedPath, {
-      content: trim(data.replace(_headerRegExp, ''))
+      content: (0, _trim2.default)(data.replace(_utils.headerRegex, ''))
     });
 
     // get required modules
-    var required = fileUtils.parseHeader(data);
+    var required = file.parseHeader(data);
 
     // if parent exist add edge from it to child
     if (parent) graph.addEdge(parent, normalizedPath);
@@ -109,7 +107,7 @@ exports.default = function (file) {
     required.forEach(function (path) {
       walk(path, normalizedPath);
     });
-  })(file);
+  })(filePath);
 
   return graph;
 };
