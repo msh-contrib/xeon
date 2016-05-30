@@ -1,23 +1,23 @@
 {
-  "name": "bash-require",
-  "version": "0.0.0",
+  "name": "xeon",
+  "version": "0.0.1",
   "description": "module loader for bash scripts",
   "bin": {
-    "br": "lib/cli.js"
+    "xeon": "dist/cli.js"
   },
   "scripts": {
     "test": "tape ./test/test.*.js | tap-spec"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drKraken/da.git"
+    "url": "git+https://github.com/hzlmn/xeon.git"
   },
   "author": "Oleh Kuchuk",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/drKraken/da/issues"
+    "url": "https://github.com/hzlmn/xeon/issues"
   },
-  "homepage": "https://github.com/drKraken/da#readme",
+  "homepage": "https://github.com/hzlmn/xeon/da#readme",
   "dependencies": {
     "chalk": "^1.1.1",
     "chokidar": "^1.4.1",
@@ -25,6 +25,7 @@
     "inherits": "^2.0.1",
     "meow": "^3.6.0",
     "mkdirp": "^0.5.1",
+    "output-file-sync": "^1.1.1",
     "shebang-regex": "^2.0.0",
     "sync-request": "^2.1.0",
     "trim": "0.0.1",

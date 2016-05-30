@@ -2,51 +2,47 @@
 
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
+var _package = require('./package.json');
 
-var meow = require('meow');
-var chalk = require('chalk');
-var pkg = require('../package.json');
-var file = require('./file');
-var utils = require('./utils');
-var buildDepsGraph = require('./deps-graph');
+var _log = require('./log');
 
-var cli = meow({
-  help: ['Usage', '  $ br ./test[.sh]', '', 'Options', '  --output  Specify output file directory', '  --watch   Watch for changes in required files and rebuild on the fly', '', 'version: ' + pkg.version],
+var _log2 = _interopRequireDefault(_log);
+
+var _xeon = require('./xeon');
+
+var _xeon2 = _interopRequireDefault(_xeon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var cli = meow('\n    Usage\n      $ br ./test[.sh]\n\n    Options\n      --output  Specify output file directory\n      --watch   Watch for changes in required files and rebuild on the fly\n\n    version: ' + _package.version + '\n  ', {
   alias: {
     i: 'input',
-    o: 'output'
+    o: 'output',
+    watch: 'watch'
   }
 });
 
-var entry = cli.flags.input;
-var outdir = cli.flags.output || path.join(process.cwd(), './bundle.sh');
+var config = {
+  entry: cli.flags.input,
+  output: cli.flags.output,
+  watch: cli.flags.watch
+};
 
-function initialize() {
-  if (!entry) {
-    console.log(chalk.white(chalk.cyan('[br]'), chalk.red('[Error]'), 'entry file should be defined'));
-    return;
+(function (config) {
+  if (!config.entry) return console.log('Entry file should be defined');
+  var xeon = new _xeon2.default(config.entry, config.output);
+
+  (0, _log2.default)(xeon);
+
+  function processBundle() {
+    xeon.buildDepsGraph();
+    xeon.resolveDepGraph();
+    xeon.writeBundle();
   }
 
-  var resolved_deps = processPath(entry);
+  processBundle();
 
-  if (cli.flags.watch) {
-    file.watch(file.getPathes(resolved_deps), function (xpath) {
-      console.log(chalk.white(chalk.cyan('[br]'), 'changes detected in file', chalk.underline.bgGreen(xpath)));
-      processPath(entry);
-    });
+  if (config.watch) {
+    console.log('start watching...');
   }
-
-  function processPath(xpath) {
-    var filePath = path.join(process.cwd(), xpath);
-    var deps = buildDepsGraph(filePath);
-    var resolved_deps = file.resolveGraph(deps.getNode(filePath));
-    var list = file.getData(resolved_deps);
-    var build = file.mergeData(list);
-    file.write(outdir, build);
-    return resolved_deps;
-  }
-}
-
-initialize();
+})(config);

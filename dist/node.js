@@ -9,12 +9,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Node = function () {
-  /**
-   * @constructor
-   * Represent single node of graph
-   * @param {String} key
-   */
-
   function Node(key, params) {
     _classCallCheck(this, Node);
 
@@ -25,13 +19,6 @@ var Node = function () {
     this.edges = []; // node connections
   }
 
-  /**
-   * @public
-   * Add connection to current node
-   * @param {Node} node
-   */
-
-
   _createClass(Node, [{
     key: 'addEdge',
     value: function addEdge(node) {
@@ -39,25 +26,11 @@ var Node = function () {
       if (this.edges.indexOf(node) > -1) return;
       this.edges.push(node);
     }
-
-    /**
-     * @public
-     * Get list of all node neighbors
-     * @return {Array} Array of neighbors
-     */
-
   }, {
     key: 'getConnections',
     value: function getConnections() {
       return this.edges;
     }
-
-    /**
-     * @public
-     * Get key of current node
-     * @return {String}
-     */
-
   }, {
     key: 'getId',
     value: function getId() {
