@@ -134,7 +134,7 @@ Thats all, xeon will download and include that file as well
 
 `Note!` for security reasons downloading external files not allowed by default 
 
-You should use flag --alow-external with previous command. Just be sure that u load good stuffs.
+You should use flag --external with previous command. Just be sure that u load good stuffs.
 
 
 ## plans for future

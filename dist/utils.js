@@ -12,14 +12,17 @@ exports.toCorrectString = toCorrectString;
 exports.isObject = isObject;
 exports.hasProperty = hasProperty;
 exports.beginsWith = beginsWith;
+exports.resolvePath = resolvePath;
 
 var _os = require('os');
 
+var _path = require('path');
+
 var _shebangRegex = require('shebang-regex');
 
-var shebangRegex = _interopRequireWildcard(_shebangRegex);
+var _shebangRegex2 = _interopRequireDefault(_shebangRegex);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //regex for matching source headers
 var headerRegex = exports.headerRegex = /require\("(.*?)"\)/g;
@@ -31,7 +34,7 @@ var correctShebang = exports.correctShebang = '#!/usr/bin/env bash';
 
 //replace shebang
 function replaceShebang(data) {
-  return data.replace(shebangRegex, '');
+  return data.replace(_shebangRegex2.default, '');
 };
 
 function toCorrectString(obj) {
@@ -49,3 +52,7 @@ function hasProperty(obj, prop) {
 function beginsWith(target, str) {
   return target.slice(0, str.length) === str;
 };
+
+function resolvePath(file) {
+  return (0, _path.isAbsolute)(file) ? file : (0, _path.resolve)(process.cwd(), file);
+}

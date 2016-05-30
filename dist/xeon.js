@@ -28,6 +28,8 @@ var _outputFileSync = require('output-file-sync');
 
 var _outputFileSync2 = _interopRequireDefault(_outputFileSync);
 
+var _utils = require('./utils');
+
 var _prettyjson = require('prettyjson');
 
 var _prettyjson2 = _interopRequireDefault(_prettyjson);
@@ -43,32 +45,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Xeon = function (_EventEmitter) {
   _inherits(Xeon, _EventEmitter);
 
-  function Xeon(entry) {
-    var output = arguments.length <= 1 || arguments[1] === undefined ? './bundle.sh' : arguments[1];
+  function Xeon() {
+    var config = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
     _classCallCheck(this, Xeon);
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Xeon).call(this));
 
-    _this.entry = _this._resolvePath(entry);
-    _this.output = _this._resolvePath(output);
+    _this.entry = (0, _utils.resolvePath)(config.entry);
+    _this.output = (0, _utils.resolvePath)(config.output || './bundle.sh');
+    _this._allowExternal = config.allowExternal || false;
     return _this;
   }
 
+  // build main deps graph
+
+
   _createClass(Xeon, [{
-    key: '_resolvePath',
-    value: function _resolvePath(file) {
-      return (0, _path.isAbsolute)(file) ? file : (0, _path.resolve)(process.cwd(), file);
-    }
-
-    // build main deps graph
-
-  }, {
     key: 'buildDesGraph',
     value: function buildDesGraph() {
       try {
         this.emit('building_graph');
-        this.graph = (0, _depsGraph2.default)(this.entry);
+        this.graph = (0, _depsGraph2.default)(this.entry, this._allowExternal);
         return this;
       } catch (error) {
         console.log('Error while building graph\n ' + _prettyjson2.default.render(error));
@@ -97,10 +95,10 @@ var Xeon = function (_EventEmitter) {
       try {
         var dataList = (0, _file.getData)(this.resolvedGraph);
         (0, _outputFileSync2.default)(this.output, (0, _file.mergeData)(dataList), 'utf-8');
-        this.emit('bundle');
+        this.emit('bundle', { file: (0, _path.basename)(this.output), output: (0, _path.dirname)(this.output) });
         return this;
       } catch (error) {
-        console.log('Error while writing graph\n ' + _prettyjson2.default.render(error));
+        console.log('Error while writing bundle\n ' + _prettyjson2.default.render(error));
       }
     }
 
@@ -116,7 +114,7 @@ var Xeon = function (_EventEmitter) {
         _this2.emit('start_watch');
       });
       watcher.on('change', function (file) {
-        _this2.emit('changes_detected', { file: file });
+        _this2.emit('changes_detected', { file: (0, _path.basename)(file) });
         callback(file);
       });
       return this;

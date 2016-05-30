@@ -6,6 +6,7 @@
     "xeon": "dist/cli.js"
   },
   "scripts": {
+    "build": "babel ./lib -d ./dist",
     "test": "tape ./test/test.*.js | tap-spec"
   },
   "repository": {
@@ -17,19 +18,17 @@
   "bugs": {
     "url": "https://github.com/hzlmn/xeon/issues"
   },
-  "homepage": "https://github.com/hzlmn/xeon/da#readme",
+  "homepage": "https://github.com/hzlmn/xeon#readme",
   "dependencies": {
     "chalk": "^1.1.1",
     "chokidar": "^1.4.1",
-    "debug": "^2.2.0",
-    "inherits": "^2.0.1",
     "meow": "^3.6.0",
-    "mkdirp": "^0.5.1",
     "output-file-sync": "^1.1.1",
     "prettyjson": "^1.1.3",
     "shebang-regex": "^2.0.0",
     "sync-request": "^2.1.0",
     "trim": "0.0.1",
+    "update-notifier": "^0.7.0",
     "url-regex": "^3.1.0"
   },
   "devDependencies": {
