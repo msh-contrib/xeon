@@ -1,4 +1,5 @@
 'use strict';
+
 var fs = require('fs');
 var path = require('path');
 
@@ -20,11 +21,7 @@ var file = module.exports = {};
  * @return null
  */
 file.readFile = function (file) {
-  console.log(chalk.white(
-    chalk.cyan('[br]'),
-    'reading data from',
-    chalk.magenta(file)
-  ));
+  console.log(chalk.white(chalk.cyan('[br]'), 'reading data from', chalk.magenta(file)));
   if (!this.isFile(file)) return;
   try {
     return fs.readFileSync(file, 'utf-8');
@@ -45,11 +42,7 @@ file.resolveGraph = function (graph) {
 
 // load external file content sync
 file.load = function (url) {
-  console.log(chalk.white(
-    chalk.cyan('[br]'),
-    'loading file from',
-    chalk.magenta(url)
-  ));
+  console.log(chalk.white(chalk.cyan('[br]'), 'loading file from', chalk.magenta(url)));
 
   try {
     var res = request('GET', url).getBody('utf-8');
@@ -125,7 +118,7 @@ file.mergeData = function (data) {
   if (!Array.isArray(data)) throw TypeError('Should be a list');
   var shebang = utils.correctShebang.concat(utils.EOL);
   return data.reduce(function (acc, curr) {
-    return acc.concat( utils.replaceShebang(curr).concat(utils.EOL) );
+    return acc.concat(utils.replaceShebang(curr).concat(utils.EOL));
   }, shebang);
 };
 
@@ -140,13 +133,7 @@ file.write = function (xpath, content) {
   try {
     fs.writeFileSync(xpath, content, 'utf-8');
   } catch (error) {
-    console.log('Cound not find file : e ', error)
+    console.log('Cound not find file : e ', error);
   }
-  console.log(chalk.white(
-    chalk.cyan('[br]'),
-    'file',
-    chalk.bold.bgGreen(opt.base),
-    'was written at',
-    chalk.bold.magenta(opt.dir)
-  ));
+  console.log(chalk.white(chalk.cyan('[br]'), 'file', chalk.bold.bgGreen(opt.base), 'was written at', chalk.bold.magenta(opt.dir)));
 };

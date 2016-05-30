@@ -1,14 +1,44 @@
-import * as path from 'path';
-import * as fs from 'fs';
-import * as urlRegex from 'url-regex';
-import * as trim from 'trim';
-import Graph from './graph';
-import utils from './utils';
-import file from './file';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _path = require('path');
+
+var path = _interopRequireWildcard(_path);
+
+var _fs = require('fs');
+
+var fs = _interopRequireWildcard(_fs);
+
+var _urlRegex = require('url-regex');
+
+var urlRegex = _interopRequireWildcard(_urlRegex);
+
+var _trim = require('trim');
+
+var trim = _interopRequireWildcard(_trim);
+
+var _graph = require('./graph');
+
+var _graph2 = _interopRequireDefault(_graph);
+
+var _utils = require('./utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _file = require('./file');
+
+var _file2 = _interopRequireDefault(_file);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 // check if string is relative path
 function relativePath(file) {
-  return utils.beginsWith(file, './') || utils.beginsWith(file, '../');
+  return _utils2.default.beginsWith(file, './') || _utils2.default.beginsWith(file, '../');
 }
 
 // read deps file and get data
@@ -53,15 +83,15 @@ function resolveFilePath(file, parent) {
   return path.resolve(modulePath, mainFile);
 }
 
-export default (file) => {
-  let graph = new Graph();
+exports.default = function (file) {
+  var graph = new _graph2.default();
 
   (function walk(file, parent) {
     // if graph already have such node skip
     if (graph.getNode(file)) return;
 
-    let normalizedPath = resolveFilePath(file, parent);
-    let data = fileUtils.readFile(normalizedPath);
+    var normalizedPath = resolveFilePath(file, parent);
+    var data = fileUtils.readFile(normalizedPath);
 
     // add node if nece
     graph.addNode(normalizedPath, {
@@ -69,18 +99,17 @@ export default (file) => {
     });
 
     // get required modules
-    let required = fileUtils.parseHeader(data);
+    var required = fileUtils.parseHeader(data);
 
     // if parent exist add edge from it to child
     if (parent) graph.addEdge(parent, normalizedPath);
     // if no modules required break recusion
     if (!required.length) return;
 
-    required.forEach( (path) => {
+    required.forEach(function (path) {
       walk(path, normalizedPath);
     });
-
   })(file);
 
   return graph;
-}
+};

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
+
 'use strict';
+
 var fs = require('fs');
 var path = require('path');
 
@@ -11,16 +13,7 @@ var utils = require('./utils');
 var buildDepsGraph = require('./deps-graph');
 
 var cli = meow({
-  help: [
-    'Usage',
-    '  $ br ./test[.sh]',
-    '',
-    'Options',
-    '  --output  Specify output file directory',
-    '  --watch   Watch for changes in required files and rebuild on the fly',
-    '',
-    'version: ' + pkg.version
-  ],
+  help: ['Usage', '  $ br ./test[.sh]', '', 'Options', '  --output  Specify output file directory', '  --watch   Watch for changes in required files and rebuild on the fly', '', 'version: ' + pkg.version],
   alias: {
     i: 'input',
     o: 'output'
@@ -30,14 +23,9 @@ var cli = meow({
 var entry = cli.flags.input;
 var outdir = cli.flags.output || path.join(process.cwd(), './bundle.sh');
 
-
 function initialize() {
   if (!entry) {
-    console.log(chalk.white(
-      chalk.cyan('[br]'),
-      chalk.red('[Error]'),
-      'entry file should be defined'
-    ));
+    console.log(chalk.white(chalk.cyan('[br]'), chalk.red('[Error]'), 'entry file should be defined'));
     return;
   }
 
@@ -45,11 +33,7 @@ function initialize() {
 
   if (cli.flags.watch) {
     file.watch(file.getPathes(resolved_deps), function (xpath) {
-      console.log(chalk.white(
-        chalk.cyan('[br]'),
-        'changes detected in file',
-        chalk.underline.bgGreen(xpath)
-      ));
+      console.log(chalk.white(chalk.cyan('[br]'), 'changes detected in file', chalk.underline.bgGreen(xpath)));
       processPath(entry);
     });
   }
