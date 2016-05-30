@@ -1,3 +1,7 @@
+<div align="center">
+<a href="http://fontmeme.com/3d-fonts/"><img src="http://fontmeme.com/embed.php?text=xeon&name=cube.ttf&size=30&style_color=116111" alt="3D Fonts"></a>
+</div>
+
 # xeon
 > #### module loader for bash scripts with node `require("module")` style
 
