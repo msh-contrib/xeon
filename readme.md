@@ -3,6 +3,8 @@
 </div>
 
 # xeon
+
+[![Join the chat at https://gitter.im/hzlmn/xeon](https://badges.gitter.im/hzlmn/xeon.svg)](https://gitter.im/hzlmn/xeon?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 > #### module loader for bash scripts with node `require("module")` style
 
 ## about
