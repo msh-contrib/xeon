@@ -17,7 +17,9 @@ large or small, for personal usage or sysadmin tasks
 ## install
 install node first then with npm do
 
-> npm i -g xeon
+```shell
+$ npm i -g xeon
+```
 
 **note** *it may require sudo mode to install global node package*
 
