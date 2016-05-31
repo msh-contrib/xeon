@@ -114,7 +114,10 @@ Then use it in our entry `app.sh`
  log_bye "Oleh"
 ```
 
-Xeon undertand that u want to load file from node modules and will generate proper bundle file.
+Xeon understand that u want to load file from node modules and will generate proper bundle file.
+
+Here is sample module that use could play with and use as reference
+> <a href="https://github.com/hzlmn/xeon-package-example">hzlmn/xeon-package-example</a>
 
 Next imagine you find some great script on internet, that do what u actually need and want to use it with your script
 
