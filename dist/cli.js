@@ -33,7 +33,8 @@ var cli = (0, _meow2.default)('\n    Usage\n      $ xeon -i ./index[.sh]\n\n    
     i: 'input',
     o: 'output',
     w: 'watch',
-    e: 'external'
+    e: 'external',
+    h: 'help'
   }
 });
 

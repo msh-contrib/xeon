@@ -12,8 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (pkg) {
   var notifier = (0, _updateNotifier2.default)({
-    packageName: pkg.name,
-    packageVersion: pkg.version,
+    pkg: pkg,
     updateCheckInterval: 1000 * 60 * 60 * 1
   });
 
