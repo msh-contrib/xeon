@@ -4,7 +4,9 @@
   "description": "graph module for xeon",
   "main": "index.js",
   "scripts": {
+    "build": "babel ./lib -d ./dist",
+    "tape": "tape ./test/*.js | tap-spec"
   },
-  "author": "",
+  "author": "Oleh Kuchuk",
   "license": "MIT"
 }

@@ -4,6 +4,8 @@
   "description": "AST generator for bash scripts",
   "main": "index.js",
   "scripts": {
+    "build": "babel ./lib -d ./dist",
+    "tape": "tape ./test/*.js | tap-spec"
   },
   "author": "Oleh Kuchuk",
   "license": "MIT"
