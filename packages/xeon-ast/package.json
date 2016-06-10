@@ -1,0 +1,10 @@
+{
+  "name": "xeon-ast",
+  "version": "0.0.1",
+  "description": "AST generator for bash scripts",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "Oleh Kuchuk",
+  "license": "MIT"
+}

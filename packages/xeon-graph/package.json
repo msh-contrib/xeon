@@ -1,0 +1,10 @@
+{
+  "name": "xeon-graph",
+  "version": "0.0.1",
+  "description": "graph module for xeon",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "MIT"
+}
