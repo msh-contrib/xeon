@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "module loader for bash scripts",
   "bin": {
-    "xeon": "dist/cli.js"
+    "xeon": "lib/cli.js"
   },
   "scripts": {
     "build": "babel ./lib -d ./dist",
