@@ -1,11 +1,11 @@
 <div align="center">
 <a href="http://fontmeme.com/3d-fonts/"><img src="http://fontmeme.com/embed.php?text=xeon&name=cube.ttf&size=30&style_color=116111" alt="3D Fonts"></a>
+<h3>Xeon</h3>
+<p>asynchronous module loader for shell scripts</p>
 </div>
 
 # xeon
-
-[![Join the chat at https://gitter.im/hzlmn/xeon](https://badges.gitter.im/hzlmn/xeon.svg)](https://gitter.im/hzlmn/xeon?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-> #### module loader for bash scripts with node `require("module")` style
+module loader for shell scripts
 
 ## about
 `xeon` tiny node.js based tool 
