@@ -5,7 +5,7 @@
 </div>
 
 ## About
-`xeon` is a tiny [Node.js]() based tool written in [Typescript](),
+`Xeon` is a tiny [Node.js]() based tool written in [Typescript](),
 that simplify the process of creation modular and reusable `shell` scripts,
 large or small, for personal usage or sysadmin tasks.
 
@@ -15,19 +15,18 @@ large or small, for personal usage or sysadmin tasks.
 
 Ready to go further, read through [getting started guide]().
 
-## install
-install node first then with npm do
+## Install
+Install node first then with npm do
 
 ```shell
 $ npm i -g xeon
 ```
 
-**note** *it may require sudo mode to install global node package*
+* *it may require sudo mode to install global node package*
 
-check availability with `xeon --help`
+Check availability with `xeon --help`
 
 if you see help message you are ready to go
 
 ## license
-
 MIT
