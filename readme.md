@@ -6,7 +6,9 @@
 
 ## About
 `Xeon` is a tiny [Node.js]() based tool written in [Typescript](),
+
 that simplify the process of creation modular and reusable `shell` scripts,
+
 large or small, for personal usage or sysadmin tasks.
 
 ## Features
