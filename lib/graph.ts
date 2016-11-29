@@ -1,24 +1,23 @@
-'use strict';
+import {isObject, hasProperty} from './utils'
+import Node from './node'
 
-const utils = require('./utils')
-const Node = require('./node')
-
-/**
- * Shorter aliases
- */
-const isObject = utils.isObject
-const hasProperty = utils.hasProperty
+/* Interface for Graph class */
+interface IGraph {
+  addNode(key: string, params: Object): void,
+  getNode(key: string): Node
+}
 
 /**
  * Class for defining abstract graph structure
  * @class Graph
  */
-class Graph {
+export default class Graph implements IGraph {
+  graph: Graph
+
   constructor() {
     if (!(this instanceof Graph)) {
       return new Graph()
     }
-    this.graph = {};
   }
 
   /**
@@ -26,8 +25,7 @@ class Graph {
    * @param {string} key node identifier
    * @param {object} params related node params
    */
-  addNode(key, params) {
-    params = params || {}
+  addNode(key: string, params: Object = {}) {
     if (!hasProperty(this.graph, key)) {
       if (!isObject(params)) {
         throw new Error('Should be an object')
@@ -69,5 +67,3 @@ class Graph {
     }
   }
 }
-
-module.exports = Graph

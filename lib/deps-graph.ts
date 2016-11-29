@@ -1,14 +1,15 @@
-const path = require('path')
-const fs = require('fs')
-const trim = require('trim')
-const Graph = require('./graph')
-const urlRegex = require('url-regex')
-const utils = require('./utils')
-const request = require('sync-request')
-const file = require('./file-utils')
-const Promise = require('bluebird')
-const coroutine = Promise.coroutine
-const bashParser = require('bash-parser')
+// const path = require('path')
+// const fs = require('fs')
+// const trim = require('trim')
+// const Graph = require('./graph')
+// const urlRegex = require('url-regex')
+// const utils = require('./utils')
+// const request = require('sync-request')
+// const file = require('./file-utils')
+// const Promise = require('bluebird')
+// const coroutine = Promise.coroutine
+// const bashParser = require('bash-parser')
+
 
 const stat = Promise.promisify(fs.stat)
 /**
@@ -92,9 +93,6 @@ const resolveFilePath = coroutine(function * (file, parent) {
   return path.resolve(modulePath, mainFile)
 })
 
-const getImportStatements = () => {
-
-}
 /**
  * Processs single chunk
  */
@@ -129,10 +127,46 @@ const chunk = coroutine(function * (graph, filePath, parent) {
   }
 })
 
-module.exports = coroutine(function * (filePath, allowExternal) {
-  var graph = new Graph()
+// module.exports = coroutine(function * (filePath, allowExternal) {
+//   var graph = new Graph()
 
-  yield chunk(graph, filePath, null)
+//   yield chunk(graph, filePath, null)
 
+//   return graph
+// })
+
+async function chunkWorker(graph: Graph, filePath: string, parent: Node) {
+  if (graph.getNode(filePath)) {
+    return undefined
+  }
+
+  var normalizedPath = await resolveFilePath(filePath, parent)
+  var data = (await readFile(normalizedPath)).toString()
+
+  graph.addNode(normalizedPath || filePath, {
+    content: data.replace(headerRegex, ''),
+  })
+
+  var required = await file.parseHeader(data)
+
+  if (parent) {
+    graph.addEdge(parent, normalizedPath || filePath)
+  }
+
+  if (required.length) {
+    var tasks = []
+    for (var i = 0; i < required.length; i++) {
+      tasks.push(chunk(graph, required[i], normalizedPath))
+    }
+
+    await Promise.all(tasks)
+  }
+}
+/**
+ * Description
+ */
+export default async function (filePath: string, allowExternal: boolean) {
+  let graph = new Graph()
+  await processChunk(graph, filePath, null)
   return graph
-})
+}

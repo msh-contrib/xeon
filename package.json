@@ -25,11 +25,6 @@
     "meow": "^3.6.0",
     "output-file-sync": "^1.1.1",
     "prettyjson": "^1.1.3",
-    "shebang-regex": "^2.0.0",
-    "sync-request": "^2.1.0",
-    "trim": "0.0.1",
-    "update-notifier": "^0.7.0",
-    "url-regex": "^3.1.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
