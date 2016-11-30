@@ -2,22 +2,29 @@ import {isObject, hasProperty} from './utils'
 import Node from './node'
 
 /* Interface for Graph class */
-interface IGraph {
+export interface IGraph {
   addNode(key: string, params: Object): void,
-  getNode(key: string): Node
+  getNode(key: string): Node,
+  addEdge(start: string, end: string): void,
+  getConnections(key: string): Node[]
 }
 
+function coroutine() {
+
+}
 /**
  * Class for defining abstract graph structure
  * @class Graph
  */
-export default class Graph implements IGraph {
-  graph: Graph
+export class DepsGraph implements IGraph {
+  graph: Object /* internal graph representation */
 
   constructor() {
-    if (!(this instanceof Graph)) {
-      return new Graph()
+    if (!(this instanceof DepsGraph)) {
+      return new DepsGraph()
     }
+
+    this.graph = {}
   }
 
   /**
@@ -25,7 +32,7 @@ export default class Graph implements IGraph {
    * @param {string} key node identifier
    * @param {object} params related node params
    */
-  addNode(key: string, params: Object = {}) {
+  addNode(key: string, params: Object = {}): void{
     if (!hasProperty(this.graph, key)) {
       if (!isObject(params)) {
         throw new Error('Should be an object')
@@ -39,7 +46,7 @@ export default class Graph implements IGraph {
    * @param {string} key node identifier
    * @returns {Node|undefined}
    */
-  getNode(key) {
+  getNode(key: string): Node {
     if (hasProperty(this.graph, key)) {
       return this.graph[key]
     }
@@ -50,7 +57,7 @@ export default class Graph implements IGraph {
    * @param {string} start node identifier
    * @param {string} end node identifier
    */
-  addEdge(start, end) {
+  addEdge(start: string, end: string): void {
     this.addNode(start)
     this.addNode(end)
     this.graph[start].addEdge(this.graph[end])
@@ -61,7 +68,7 @@ export default class Graph implements IGraph {
    * @param {string} key node identifier
    * @returs {array|undefined} node connections
    */
-  getConnections(key) {
+  getConnections(key: string): Node[] {
     if (hasProperty(this.graph, key)) {
       return this.graph[key].getConnections()
     }

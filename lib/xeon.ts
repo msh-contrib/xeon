@@ -65,45 +65,83 @@
 
 // module.exports = Xeon
 
-import {EventEmitter} from 'events'
-
-interface ConfigObject extends Object {
-  entry: string,
-  output: string,
-  allowExternal: boolean,
-  packageProviders: string[],
-  defaultProvider: string
-}
+import {buildDepsGraph} from './deps-graph'
+import * as utils from './utils'
+import * as path from 'path'
+import { EventEmitter } from 'events'
 
 /**
- * @class Xeon
+ * Defines interface for configuration parameters
  */
+interface ConfigObject {
+  entry: string, // entry file path
+  output?: string, // output path
+  allowExternal?: boolean, // allow loading scripts from web
+  packageProviders?: string[], // list of available package providers
+  defaultProvider?: string // default package provider
+}
+
 export default class Xeon extends EventEmitter {
   entry: string
   output: string
-  private allowExternal: boolean
+  allowExternal: boolean
   graph: Object
-  packageProviders: string[]
+  resolvedGraph: Object
+  packageProviders: Array<string>
+  defaultProvider: string
 
-  constructor(config: ConfigObject = {
-    entry: './index.sh',
-    output: './bundle.sh',
-    allowExternal: false,
-    packageProviders: ['npm', 'bpkg'],
-    defaultProvider: 'npm'
-  }) {
+  constructor({
+    entry,
+    output = './bundle.sh',
+    allowExternal = false,
+    packageProviders = ['npm', 'bpkg'],
+    defaultProvider = 'npm'
+  }: ConfigObject) {
     super()
-    this.entry = config.entry
-    this.output = config.output
-    this.allowExternal = config.allowExternal
-    this.packageProviders = config.packageProviders
+    this.entry = entry
+    this.output = output
+    this.allowExternal = allowExternal
+    this.packageProviders = packageProviders
+    this.defaultProvider = defaultProvider
   }
 
   /**
-   * Constructing
+   * Construct dependency graph
    */
   async buildDependencyGraph() {
     this.emit('bulding_graph')
     this.graph = await buildDependencyGraph(this.entry, this.allowExternal)
+  }
+
+  /**
+   * Resolve dependency graph
+   */
+  async resolveDependencyGraph(): Promise<void> {
+    this.emit('resolving_graph')
+    this.resolvedGraph = await resolver(this.graph.getNode(this.entry))
+  }
+
+  /**
+   * Write bundle to file
+   */
+  async writeBundle(): Promise<void> {
+    const dataList = await file.getData(this.resolvedGraph)
+    var data = await file.mergeData(dataList)
+    await output(this.output, data, 'utf-8')
+    this.emit('bundle', {
+      file: path.basename(this.output),
+      output: path.dirname(this.output)
+    })
+  }
+
+  wathcDependencies(cb: Function): void {
+    const watcher = chokidar.watch(getPaths(this.resolvedGraph), { ingnoreInitial: true })
+    watcher.on('ready', () => this.emit('start:watch'))
+    watcher.on('change', (file: string) => {
+      this.emit('changes:detected', {
+        file: path.basename(file)
+      })
+      cb(file)
+    })
   }
 }

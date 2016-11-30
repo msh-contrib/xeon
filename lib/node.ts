@@ -1,9 +1,9 @@
 /**
  * Shareable interface for Node class
  */
-interface INode {
-  getConnections(): Node[]
-  addEdge(node: Node): void,
+export interface IGraphNode {
+  getConnections(): IGraphNode[]
+  addEdge(node: IGraphNode): void,
   getId(): string
 }
 
@@ -11,10 +11,10 @@ interface INode {
  * Define single graph node
  * @class Node
  */
-export default class Node implements INode {
+export class Dependency implements IGraphNode {
   private _id: string
   private _params: Object
-  private _edges: Node[] = [] // node connections
+  private _edges: Array<IGraphNode> = [] // node connections
 
   /**
    * @constructor
@@ -23,7 +23,7 @@ export default class Node implements INode {
    */
   constructor(key: string, params: Object) {
     if (!(this instanceof Node)) {
-      return new Node(key, params)
+      return new Dependency(key, params)
     }
 
     this._id = key;
@@ -35,23 +35,23 @@ export default class Node implements INode {
    * Add connection to node
    * @param {Node} node associated node
    */
-  addEdge(node: Node) {
+  addEdge(node: IGraphNode): void {
     if (this._edges.indexOf(node) < 0) {
       this._edges.push(node)
     }
   }
 
   /**
-   * Get all node\s connections
+   * Get all node's connections
    */
-  getConnections(): Node[] {
+  getConnections(): Array<IGraphNode> {
     return this._edges
   }
 
   /**
    * Get node's identifier
    */
-  getId() {
+  getId(): string {
     return this._id
   }
 }

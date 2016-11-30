@@ -10,6 +10,11 @@
 // const coroutine = Promise.coroutine
 // const bashParser = require('bash-parser')
 
+import * as path from 'path'
+import * as fs from 'fs'
+import Graph from './graph'
+import * as utils from './utils'
+
 
 const stat = Promise.promisify(fs.stat)
 /**
@@ -167,6 +172,12 @@ async function chunkWorker(graph: Graph, filePath: string, parent: Node) {
  */
 export default async function (filePath: string, allowExternal: boolean) {
   let graph = new Graph()
-  await processChunk(graph, filePath, null)
+  // await processChunk(graph, filePath, null)\
+
+  processChunk(graph, filePath, null)
+    .then(() => {
+
+    })
+
   return graph
 }
