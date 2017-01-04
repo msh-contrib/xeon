@@ -1,31 +1,31 @@
 <div align="center">
 
 <p>
-Embris
+<span style="font-size: 20px;">Embris</span>
 <br>
 ~ asynchronous module loader for shell scripts ~</p>
 </div>
 
-## About
+#### About
 Xeon is a tiny [Node.js]() based tool written in [Typescript](), that simplify the process of creation modular and `shell` scripts. Large or small, for personal usage or sysadmin tasks.
 
-## Features
-* **Simplicity** 
+#### Features
+* Simplicity
   > *provides just a small abstraction,so you can immediately start to play with it.*.
 
-* **Perfomance**
+* Perfomance
   > *async by nature, allowing good perfomance while utilizing less system resources.*
   
-* **Modularization**
+* Modularization
   > *allows you to split large 1k loc scripts, into small manageable chunks.*
   
-* **Reusability**
+* Reusability
   > *don't repeat yourself, reuse packages written by community and write your own.*
   
 
 Ready to go further, read through [getting started guide]().
 
-## Install
+#### Install
 Install node first then with `npm` do
 
 ```shell
@@ -36,5 +36,5 @@ $ npm i -g xeon
 
 Check availability with `xeon --help`, if you see help message you are ready to go.
 
-## license
+#### License
 MIT
