@@ -1,8 +1,6 @@
 <div align="center">
-
+<h3>Embris</h3>
 <p>
-<span style="font-size: 20px;">Embris</span>
-<br>
 ~ asynchronous module loader for shell scripts ~</p>
 </div>
 
