@@ -20,7 +20,8 @@ Xeon is a tiny [Node.js]() based tool written in [Typescript](), that simplify t
 * Reusability
   > *don't repeat yourself, reuse packages written by community and write your own.*
   
-
+  
+<br>
 Ready to go further, read through [getting started guide]().
 
 #### Install
