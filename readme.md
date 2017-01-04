@@ -1,6 +1,9 @@
 <div align="center">
-<h2>Embris</h2>
-<p>~ asynchronous module loader for shell scripts ~</p>
+
+<p>
+Embris
+<br>
+~ asynchronous module loader for shell scripts ~</p>
 </div>
 
 ## About
