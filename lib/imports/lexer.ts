@@ -42,15 +42,67 @@ export class ImportsLexer {
   source: string
   _currentToken: Token
   _stream: CharStream
+  _currentChar: string
+
+  allowedKeywords: Array<string> = [
+    'import',
+    'require', // just an alias
+    'load',
+    'from'
+  ]
 
   constructor(source: string) {
     this.source = source
     this._stream = new CharStream()
   }
 
-  nextToken() {
+  readWhileHelper(predicate: (char: string) => boolean): string {
+    var value = ''
+    while (predicate(this._currentChar)) {
+      value += this._currentChar
+      this._currentChar = this._stream.readNextChar()
+    }
+
+    return value
+  }
+
+  nextToken(): Token {
     if (!this._stream.EOF) {
-      const char = this._stream.readNextChar()
+      this._currentChar = this._stream.readNextChar()
+
+      if (/[a-z]/i.test(this._currentChar)) {
+        // If char is identifier
+        // get full string
+        const identifier = this.readWhileHelper(function (char) {
+          return /[a-z]/i.test(char)
+        })
+
+        if (this.allowedKeywords.indexOf(identifier) > -1) {
+          return {
+            type: 'keyword',
+            value: identifier
+          }
+        } else {
+          return {
+            type: 'identifier',
+            value: identifier
+          }
+        }
+      } else if (this._currentChar == '(') {
+        return {
+          type: 'LBrace',
+          value: this._currentChar
+        }
+      } else if (this._currentChar == ')') {
+        return {
+          type: 'RBrace',
+          value: this._currentChar
+        }
+      } else {
+        // pass
+      }
+    } else {
+      console.error('<EOF')
     }
   }
 }
