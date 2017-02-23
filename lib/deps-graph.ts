@@ -170,7 +170,7 @@ async function chunkWorker(graph: Graph, filePath: string, parent: Node) {
 /**
  * Description
  */
-export default async function (filePath: string, allowExternal: boolean) {
+export default async function (filePath: string) {
   let graph = new Graph()
   // await processChunk(graph, filePath, null)\
 
@@ -180,4 +180,10 @@ export default async function (filePath: string, allowExternal: boolean) {
     })
 
   return graph
+}
+
+class GraphBuilder {
+  constructor() {
+
+  }
 }

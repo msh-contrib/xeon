@@ -13,3 +13,7 @@ module.exports = coroutine(function * (data) {
     header.replace(utils.headerRegex, '$1')
   )
 })
+
+export function getIncludes(data: string) {
+
+}

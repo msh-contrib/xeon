@@ -24,9 +24,10 @@
     "chokidar": "^1.4.1",
     "meow": "^3.6.0",
     "output-file-sync": "^1.1.1",
-    "prettyjson": "^1.1.3",
+    "prettyjson": "^1.1.3"
   },
   "devDependencies": {
+    "@types/node": "^7.0.5",
     "babel-preset-es2015": "^6.9.0",
     "fly-babel": "^0.8.0",
     "tap-spec": "^4.1.1",

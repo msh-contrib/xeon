@@ -82,27 +82,23 @@ interface ConfigObject {
 }
 
 export default class Xeon extends EventEmitter {
-  entry: string
-  output: string
-  allowExternal: boolean
+  config: ConfigObject
+  // entry: string
+  // output: string
+  // allowExternal: boolean
   graph: Object
-  resolvedGraph: Object
-  packageProviders: Array<string>
-  defaultProvider: string
+  // resolvedGraph: Object
+  // packageProviders: Array<string>
+  // defaultProvider: string
 
-  constructor({
-    entry,
-    output = './bundle.sh',
-    allowExternal = false,
-    packageProviders = ['npm', 'bpkg'],
-    defaultProvider = 'npm'
-  }: ConfigObject) {
+  constructor(config: ConfigObject) {
     super()
-    this.entry = entry
-    this.output = output
-    this.allowExternal = allowExternal
-    this.packageProviders = packageProviders
-    this.defaultProvider = defaultProvider
+    this.config = config
+    // this.entry = entry
+    // this.output = output
+    // this.allowExternal = allowExternal
+    // this.packageProviders = packageProviders
+    // this.defaultProvider = defaultProvider
   }
 
   /**
