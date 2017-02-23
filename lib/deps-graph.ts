@@ -172,18 +172,6 @@ async function chunkWorker(graph: Graph, filePath: string, parent: Node) {
  */
 export default async function (filePath: string) {
   let graph = new Graph()
-  // await processChunk(graph, filePath, null)\
-
-  processChunk(graph, filePath, null)
-    .then(() => {
-
-    })
-
+  await chunkWorker(graph, filePath, null)
   return graph
-}
-
-class GraphBuilder {
-  constructor() {
-
-  }
 }

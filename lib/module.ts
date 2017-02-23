@@ -1,16 +1,19 @@
-import shParser from 'bash-parser'
+import parse from 'bash-parser'
 
 export class Module {
-  name: string
+  filePath: string
+  source: string
   ast: Object
 
-  constructor(name: string, source: string) {
-    this.name = name
-
+  constructor({ filePath, source }) {
+    this.source = source
+    this.filePath = filePath
     try {
-      this.ast = shParser(source)
+      this.ast = parse(source)
     } catch (error) {
-      console.log(error)
+      console.error('Parsing error')
     }
   }
+
+  getDependencies() {}
 }

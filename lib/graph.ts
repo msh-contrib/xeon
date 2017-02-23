@@ -9,12 +9,12 @@ interface GraphMap {
  * Class for defining abstract graph structure
  * @class Graph
  */
-export class DepsGraph {
+export class Graph {
   _graph: GraphMap /* internal graph representation */
 
   constructor() {
-    if (!(this instanceof DepsGraph)) {
-      return new DepsGraph()
+    if (!(this instanceof Graph)) {
+      return new Graph()
     }
 
     this._graph = {}
