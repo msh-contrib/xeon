@@ -1,39 +1,35 @@
 <div align="center">
-<h3>Embris</h3>
-<p>
-~ asynchronous module loader for shell scripts ~</p>
+<h3>msh</h3>
+~ Modular Shell Scripts ~
 </div>
 
 #### About
-Xeon is a tiny [Node.js]() based tool written in [Typescript](), that simplify the process of creation modular and `shell` scripts. Large or small, for personal usage or sysadmin tasks.
+Msh is a small tool, that simplify the process of creation modular shell scripts.
+It is just a helpful addition to standard scripts
 
 #### Features
-* Simplicity
-  > *provides just a small abstraction,so you can immediately start to play with it.*.
+ - *Small abstraction, zero configuaration, you can immediately start to play with it.*.
+ - *async by nature, allows good perfomance while utilizing less system resources.*
+ - *allows you to split large scripts, into small manageable chunks.*
+ - *[DRY](), reuse packages written by community and write your own.*
+  
+#### Philosophy
+ TBD
 
-* Perfomance
-  > *async by nature, allowing good perfomance while utilizing less system resources.*
-  
-* Modularization
-  > *allows you to split large 1k loc scripts, into small manageable chunks.*
-  
-* Reusability
-  > *don't repeat yourself, reuse packages written by community and write your own.*
-  
-  
 <br>
 Ready to go further, read through [getting started guide]().
+
 
 #### Install
 Install node first then with `npm` do
 
 ```shell
-$ npm i -g xeon
+$ [sudo] npm i -g msh
 ```
 
 * *it may require sudo mode to install global node package*
 
-Check availability with `xeon --help`, if you see help message you are ready to go.
+Check availability with `msh --help`, if you see help message you are ready to go.
 
 #### License
 MIT
