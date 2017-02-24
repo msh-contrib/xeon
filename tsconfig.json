@@ -3,20 +3,12 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es6",
+    "rootDir": "./lib",
     "noImplicitAny": false,
     "sourceMap": false,
     "outDir": "./out"
   },
-
   "exclude": [
     "node_modules"
-  ],
-
-  "files": [
-    "typings/index.d.ts",
-    "lib/xeon.ts",
-    "lib/node.ts",
-    "lib/utils.ts",
-    "lib/graph.ts"
   ]
 }
