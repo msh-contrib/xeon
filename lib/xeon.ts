@@ -79,6 +79,9 @@ interface ConfigObject {
   allowExternal?: boolean, // allow loading scripts from web
   packageProviders?: string[], // list of available package providers
   defaultProvider?: string // default package provider
+  allowTreeTransforming?: boolean
+  packagesRoot: string
+  exec: boolean
 }
 
 export default class Xeon extends EventEmitter {
