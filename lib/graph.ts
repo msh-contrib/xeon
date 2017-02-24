@@ -25,7 +25,7 @@ export class Graph {
    * @param {string} key node identifier
    * @param {object} params related node params
    */
-  addNode(key: string, params: Object = {}): void{
+  addNode(key: string, params: Object = {}): void {
     if (!hasProperty(this._graph, key)) {
       if (!isObject(params)) {
         throw new Error('Should be an object')
