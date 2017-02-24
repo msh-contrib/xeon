@@ -5,10 +5,10 @@
 
 #### About
 Msh is a small tool, that simplify the process of creation modular shell scripts.
-It is just a helpful addition to standard scripts
+It is just a helpful addition to standalone scripts
 
 #### Features
- - *Small abstraction, zero configuaration, you can immediately start to play with it.*.
+ - *Small abstraction, zero configuration, you can immediately start to play with it.*.
  - *async by nature, allows good perfomance while utilizing less system resources.*
  - *allows you to split large scripts, into small manageable chunks.*
  - *[DRY](), reuse packages written by community and write your own.*
