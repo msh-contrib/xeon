@@ -6,8 +6,7 @@
     "xeon": "lib/cli.js"
   },
   "scripts": {
-    "build": "babel ./lib -d ./dist",
-    "test": "tape ./test/test.*.js | tap-spec"
+    "build": "babel ./lib -d ./dist"
   },
   "repository": {
     "type": "git",
