@@ -1,48 +1,18 @@
-interface Token {
-  type: string,
-  value: string
-}
+import {CharStream} from './stream'
+import {Token} from './token'
 
-const newLineChars = ['\n', '\r', '\f']
+import {
+  AllowedTokenTypes,
+  CharTypes,
+  CharMap
+} from './types'
 
-class CharStream {
-  source: string
-  cursor: number
-  line: number
-  column: number
-
-  _currentChar: string
-
-  constuctor(source: string) {
-    this.source = source
-    this.cursor = 0
-    this.line = 1
-    this.column = 0
-  }
-
-  readNextChar( ){
-    const char = this.source.charAt(this.cursor++)
-
-    if (newLineChars.indexOf(char) > -1) {
-      ++this.line
-      this.column = 0
-    } else {
-      ++this.column
-    }
-
-    return char
-  }
-
-  get EOF() {
-    return this.cursor >= this.source.length
-  }
-}
+const LITERAL_REGEX = /[a-z]/i
 
 export class ImportsLexer {
   source: string
-  _currentToken: Token
   _stream: CharStream
-  _currentChar: string
+  tokens: Array<Token>
 
   allowedKeywords: Array<string> = [
     'import',
@@ -54,55 +24,49 @@ export class ImportsLexer {
   constructor(source: string) {
     this.source = source
     this._stream = new CharStream()
+    this.tokens = []
   }
 
-  readWhileHelper(predicate: (char: string) => boolean): string {
-    var value = ''
-    while (predicate(this._currentChar)) {
-      value += this._currentChar
-      this._currentChar = this._stream.readNextChar()
+  tokenizeLiteral(): void {
+    var value = '', token
+
+    while ( LITERAL_REGEX.test(this._stream.peekCurrent()) ) {
+      value += this._stream.nextCharacter()
     }
 
-    return value
+    if ( this.allowedKeywords.indexOf(value) > -1 ) {
+      this.tokens.push(new Token(AllowedTokenTypes.Keyword, value))
+      return
+    }
+
+    this.tokens.push(new Token(AllowedTokenTypes.Identifier, value))
   }
 
-  nextToken(): Token {
-    if (!this._stream.EOF) {
-      this._currentChar = this._stream.readNextChar()
+  tokenizeQuote() {
+    return []
+  }
 
-      if (/[a-z]/i.test(this._currentChar)) {
-        // If char is identifier
-        // get full string
-        const identifier = this.readWhileHelper(function (char) {
-          return /[a-z]/i.test(char)
-        })
+  _quoteChar(type) {
+    return (type == CharTypes.Quote || type == CharTypes.DOuote || type == CharTypes.BackQuote )
+  }
 
-        if (this.allowedKeywords.indexOf(identifier) > -1) {
-          return {
-            type: 'keyword',
-            value: identifier
-          }
-        } else {
-          return {
-            type: 'identifier',
-            value: identifier
-          }
-        }
-      } else if (this._currentChar == '(') {
-        return {
-          type: 'LBrace',
-          value: this._currentChar
-        }
-      } else if (this._currentChar == ')') {
-        return {
-          type: 'RBrace',
-          value: this._currentChar
-        }
-      } else {
-        // pass
+  tokenize(): Array<Token> {
+    while (!this._stream.EOF) {
+      var char = this._stream.nextCharacter()
+      if (LITERAL_REGEX.test(char)) {
+        this.tokenizeLiteral()
+        continue
       }
-    } else {
-      console.error('<EOF')
+      const type = CharMap[char]
+      if (type) {
+        if (this._quoteChar(type)) {
+          this.tokenizeQuote()
+          continue
+        }
+        this.tokens.push(new Token(AllowedTokenTypes.Unknown, char))
+      }
     }
+
+    return this.tokens
   }
 }

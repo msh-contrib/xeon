@@ -8,6 +8,10 @@ const usedShells = [
   'fish'
 ]
 
+function relativePath(filePath: string) {
+  return beginsWith('./', filePath) || beginsWith('../', filePath)
+}
+
 function addExtension(filePath: string) {
   const extension = extname(filePath)
 
@@ -20,10 +24,6 @@ function addExtension(filePath: string) {
   }
 
   return filePath.concat('.sh')
-}
-
-function relativePath(filePath: string) {
-  return beginsWith('./', filePath) || beginsWith('../', filePath)
 }
 
 export function getLocation(filePath, parent): string {
