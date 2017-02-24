@@ -1,4 +1,12 @@
-export enum AllowedTokenTypes {
+/**
+ * Limited types supported by parser for import statements
+ */
+
+/**
+ * Supported types for single tokens
+ * @type AllowedTokenTypes
+ */
+export enum TokenTypes {
   Unknown,
   Asterisk,
   Lbrace,
@@ -8,6 +16,10 @@ export enum AllowedTokenTypes {
   Keyword
 }
 
+/**
+ * Supported character types
+ * @type CharTypes
+ */
 export enum CharTypes {
   LBrace = 1,
   RBrace,
@@ -17,6 +29,9 @@ export enum CharTypes {
   BackQuote
 }
 
+/**
+ * Maps character value to specific char type
+ */
 export const CharMap = {
   '(': CharTypes.LBrace,
   ')': CharTypes.RBrace,

@@ -1,10 +1,20 @@
-import {AllowedTokenTypes} from './types'
+import {TokenTypes} from './types'
 
+/**
+ * @class Token
+ *
+ * Base class for declaring single token structure
+ */
 export class Token {
-  type: AllowedTokenTypes
+  type: TokenTypes
   value: string
 
-  constructor(type: AllowedTokenTypes, value: string) {
+  /**
+   * Create instance
+   * @param  {AllowedTokenTypes} type
+   * @param  {string} value
+   */
+  constructor(type: TokenTypes, value: string) {
     this.type = type
     this.value = value
   }

@@ -1,50 +1,55 @@
-const newLineChars = ['\n', '\r', '\f']
-
-interface Position {
-  x: number,
-  y: number
-}
-
+/**
+ * @class CharStream
+ *
+ * Base class for streaming characters
+ * one by one from raw source string
+ *
+ * used by Lexer
+ */
 export class CharStream {
   source: string
-  _cursor: number
-  _position: Position
+  _pointer: number
 
-  constuctor(source: string) {
+  /**
+   * Create CharStream instance
+   * @param  {string} source
+   */
+  constructor(source: string) {
     this.source = source
-    this._cursor = 0
-    this._position = {
-      y: 1,
-      x: 0
-    }
+    this._pointer = 0
   }
 
-  nextCharacter(): string {
-    const char = this.source.charAt(this._cursor++)
-
-    if (newLineChars.indexOf(char) > -1) {
-      this._position.y += 1
-      this._position.x = 0
-    } else {
-      this._position.x += 1
-    }
-
-    return char
+  /**
+   * Get next character from source string
+   * @returns {string}
+   */
+  readNextChar(): string {
+    return this.source.charAt(this._pointer++)
   }
 
+  /**
+   * Peeking character on current position
+   * in the source string
+   * @returns {string}
+   */
   peekCurrent(): string {
-    return this.source.charAt(this._cursor)
+    return this.source.charAt(this._pointer)
   }
 
-  getPosition() {
-    return this._position
+  /**
+   * Get current pointer in source string
+   * @returns {number}
+   */
+  getPointer(): number {
+    return this._pointer
   }
 
-  throwException(message) {
-    throw new Error(message)
-  }
-
-  get EOF() {
-    return this._cursor >= this.source.length
+  /**
+   * Check if pointer reached EOF
+   * of current source string
+   * @returns {boolean}
+   */
+  get EOF(): boolean {
+    return this._pointer >= this.source.length
   }
 }
