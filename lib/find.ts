@@ -1,6 +1,13 @@
-import {readFile} from './file'
-import {isAbsolute, extname, resolve, dirname} from 'path'
-import {beginsWith} from './utils'
+import { readFile } from './file'
+
+import {
+  isAbsolute,
+  extname,
+  resolve,
+  dirname
+} from 'path'
+
+import { beginsWith } from './utils'
 
 const usedShells = [
   'sh',

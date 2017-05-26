@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/hzlmn/xeon#readme",
   "dependencies": {
+    "bash-parser": "^0.4.0",
     "chalk": "^1.1.1",
     "chokidar": "^1.4.1",
     "meow": "^3.6.0",

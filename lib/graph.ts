@@ -10,14 +10,14 @@ interface GraphMap {
  * @class Graph
  */
 export class Graph {
-  _graph: GraphMap /* internal graph representation */
+  private graph: GraphMap /* internal graph representation */
 
-  constructor() {
+  public constructor() {
     if (!(this instanceof Graph)) {
       return new Graph()
     }
 
-    this._graph = {}
+    this.graph = {}
   }
 
   /**
@@ -25,12 +25,12 @@ export class Graph {
    * @param {string} key node identifier
    * @param {object} params related node params
    */
-  addNode(key: string, params: Object = {}): void {
-    if (!hasProperty(this._graph, key)) {
+  public addNode(key: string, params: Object = {}): void {
+    if (!hasProperty(this.graph, key)) {
       if (!isObject(params)) {
         throw new Error('Should be an object')
       }
-      this._graph[key] = new Node(key, params)
+      this.graph[key] = new Node(key, params)
     }
   }
 
@@ -39,9 +39,9 @@ export class Graph {
    * @param {string} key node identifier
    * @returns {Node|undefined}
    */
-  getNode(key: string): Node {
-    if (hasProperty(this._graph, key)) {
-      return this._graph[key]
+  public getNode(key: string): Node {
+    if (hasProperty(this.graph, key)) {
+      return this.graph[key]
     }
   }
 
@@ -50,10 +50,10 @@ export class Graph {
    * @param {string} start node identifier
    * @param {string} end node identifier
    */
-  addEdge(start: string, end: string): void {
+  public addEdge(start: string, end: string): void {
     this.addNode(start)
     this.addNode(end)
-    this._graph[start].addEdge(this._graph[end])
+    this.graph[start].addEdge(this.graph[end])
   }
 
   /**
@@ -61,9 +61,9 @@ export class Graph {
    * @param {string} key node identifier
    * @returs {array|undefined} node connections
    */
-  getConnections(key: string): Node[] {
-    if (hasProperty(this._graph, key)) {
-      return this._graph[key].getConnections()
+  public getConnections(key: string): Node[] {
+    if (hasProperty(this.graph, key)) {
+      return this.graph[key].getConnections()
     }
   }
 }
